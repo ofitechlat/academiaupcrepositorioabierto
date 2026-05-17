@@ -53,7 +53,7 @@ Si deseas alojarlo de manera remota, puedes subirlo a tu servidor de hosting web
 
 *   **Creador de Contenidos**: Ofitech.lat
 *   **Academia**: Academia UPC - Repositorio Abierto
-*   **Licencia**: Recurso educativo abierto para uso formativo.
+*   **Licencia**: Recurso Educativo Abierto (REA) para Docentes. Uso regulado bajo los términos de la licencia de **Fair Use (Uso Justo)**.
 *   **Enlace de Clases**: Visita la academia y accede a tutorías personalizadas y clases magistrales en: [ofitech.lat/clases](https://ofitech.lat/clases)
 
 ---

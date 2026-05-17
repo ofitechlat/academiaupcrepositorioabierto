@@ -625,26 +625,20 @@ def generate_content_xml(meta, course_data):
         # --- COMPONENT 1: THEORY TEXT ---
         # Add dynamic authorship headers/footers to fulfill Ofitech.lat and Academia UPC open repository credits
         header_banner = (
-            "<div style=\"background: rgba(6, 182, 212, 0.08); border-left: 4px solid #06b6d4; padding: 12px 18px; border-radius: 8px; margin-bottom: 25px; font-family: sans-serif; font-size: 0.9rem;\">"
-            "🎓 <strong>Material Didáctico Abierto:</strong> Creado por <a href=\"https://ofitech.lat/clases\" target=\"_blank\" style=\"color: #06b6d4; font-weight: 700; text-decoration: none;\">Ofitech.lat</a> para el <strong>Repositorio Abierto de Academia UPC</strong>."
+            "<div style=\"margin-bottom: 20px; font-size: 0.85rem; color: #94a3b8; font-family: sans-serif; line-height: 1.6;\">"
+            "🎓 <strong>Recurso Educativo Abierto para Docentes</strong> • Creado por <a href=\"https://ofitech.lat/clases\" target=\"_blank\" style=\"color: #06b6d4; text-decoration: none; font-weight: 600;\">Ofitech.lat</a> para el Repositorio Abierto de Academia UPC • Licencia: <strong>Fair Use (Uso Justo)</strong>"
             "</div>"
         )
         
         footer_block = (
-            "<hr style=\"border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 40px 0 20px 0;\"/>"
-            "<div style=\"background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 16px; text-align: center; margin-top: 30px; font-family: sans-serif;\">"
-            "<p style=\"margin-bottom: 12px; font-size: 1.05rem; font-weight: 600; color: #ffffff;\">"
-            "Material Didáctico creado por <strong>Ofitech.lat</strong> para el <strong>Repositorio Abierto de Academia UPC</strong>."
+            "<hr style=\"border: 0; border-top: 1px solid rgba(255,255,255,0.06); margin: 30px 0 15px 0;\"/>"
+            "<div style=\"font-size: 0.85rem; color: #94a3b8; text-align: center; font-family: sans-serif; line-height: 1.6;\">"
+            "<p style=\"margin-bottom: 6px;\">"
+            "🎓 <strong>Recursos Abiertos para Docentes</strong> desarrollados por <a href=\"https://ofitech.lat/clases\" target=\"_blank\" style=\"color: #06b6d4; text-decoration: none; font-weight: 600;\">Ofitech.lat</a> para el Repositorio Abierto de Academia UPC."
             "</p>"
-            "<p style=\"margin-bottom: 20px; font-size: 0.85rem; color: #94a3b8; line-height: 1.5;\">"
-            "Código fuente disponible en el repositorio Git público de la academia:<br>"
-            "<a href=\"https://github.com/ofitechlat/academiaupcrepositorioabierto.git\" target=\"_blank\" style=\"color: #ec4899; text-decoration: none; font-weight: 600; word-break: break-all;\">"
-            "https://github.com/ofitechlat/academiaupcrepositorioabierto.git"
-            "</a>"
+            "<p style=\"margin-bottom: 6px;\">"
+            "Uso regulado bajo los términos de la licencia de <strong>Fair Use (Uso Justo)</strong>. Código fuente y recursos en <a href=\"https://github.com/ofitechlat/academiaupcrepositorioabierto.git\" target=\"_blank\" style=\"color: #ec4899; text-decoration: none; font-weight: 600;\">GitHub</a>."
             "</p>"
-            "<a href=\"https://ofitech.lat/clases\" target=\"_blank\" style=\"text-decoration: none; display: inline-block; background: linear-gradient(90deg, #06b6d4, #ec4899); color: #ffffff; padding: 14px 32px; font-size: 1.05rem; border-radius: 12px; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);\">"
-            "🚀 Ir a Clases - Academia Ofitech.lat"
-            "</a>"
             "</div>"
         )
         
