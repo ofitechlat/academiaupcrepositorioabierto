@@ -10,19 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --panel-bg: rgba(30, 41, 59, 0.7);
-            --panel-border: rgba(255, 255, 255, 0.08);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-cyan: #06b6d4;
-            --accent-pink: #ec4899;
-            --accent-green: #10b981;
-            --accent-blue: #3b82f6;
-            --accent-orange: #f97316;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.95);
+            --panel-border: rgba(0, 0, 0, 0.08);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-cyan: #0891b2;
+            --accent-pink: #db2777;
+            --accent-green: #15803d;
+            --accent-blue: #1d4ed8;
+            --accent-orange: #c2410c;
             --font-outfit: 'Outfit', 'Inter', sans-serif;
             --font-inter: 'Inter', sans-serif;
-            --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --shadow-premium: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
             --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -50,7 +50,7 @@
             text-align: center;
             margin-bottom: 30px;
             padding: 20px;
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(255, 255, 255, 0.85);
             border-bottom: 1px solid var(--panel-border);
             border-radius: 20px;
             backdrop-filter: blur(10px);
@@ -111,7 +111,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
             padding-bottom: 12px;
         }
 
@@ -138,9 +138,9 @@
             max-width: 420px;
             aspect-ratio: 1;
             position: relative;
-            background: rgba(15, 23, 42, 0.3);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             padding: 10px;
             margin-bottom: 20px;
         }
@@ -162,10 +162,10 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            background: rgba(15, 23, 42, 0.2);
+            background: #f1f5f9;
             padding: 12px 18px;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid #e2e8f0;
         }
 
         .slider-group label {
@@ -179,7 +179,7 @@
             flex-grow: 1;
             height: 6px;
             border-radius: 3px;
-            background: #334155;
+            background: #cbd5e1;
             outline: none;
             -webkit-appearance: none;
             cursor: pointer;
@@ -220,8 +220,8 @@
         .input-with-unit {
             display: flex;
             align-items: center;
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
             border-radius: 12px;
             padding: 8px 12px;
             transition: var(--transition-smooth);
@@ -258,8 +258,8 @@
         }
 
         .value-card {
-            background: rgba(15, 23, 42, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
             border-radius: 16px;
             padding: 12px;
             text-align: center;
@@ -304,8 +304,8 @@
         }
 
         .solver-step {
-            background: rgba(15, 23, 42, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 18px;
             font-size: 0.95rem;
@@ -324,7 +324,7 @@
 
         .solver-step p {
             margin-bottom: 8px;
-            color: #cbd5e1;
+            color: #334155;
         }
 
         .solver-step strong {
@@ -332,14 +332,15 @@
         }
 
         .formula-box {
-            background: rgba(15, 23, 42, 0.4);
-            padding: 8px 12px;
+            background: #f0f9ff;
+            padding: 10px 14px;
             border-radius: 8px;
             font-family: monospace;
             font-size: 0.9rem;
-            color: #38bdf8;
+            color: #0369a1;
             margin: 5px 0 10px 0;
-            border-left: 3px solid var(--accent-cyan);
+            border: 1px solid #e0f2fe;
+            border-left: 4px solid var(--accent-cyan);
         }
 
         /* Practice Area Panel */
@@ -429,8 +430,8 @@
         }
 
         .option-card {
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
             border-radius: 14px;
             padding: 15px;
             cursor: pointer;
@@ -439,28 +440,29 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            color: var(--text-primary);
         }
 
         .option-card:hover {
-            background: rgba(30, 41, 59, 0.6);
+            background: #f8fafc;
             border-color: var(--accent-cyan);
             transform: translateX(2px);
         }
 
         .option-card.selected {
-            background: rgba(6, 182, 212, 0.1);
+            background: rgba(8, 145, 178, 0.08);
             border-color: var(--accent-cyan);
-            color: var(--text-primary);
+            color: var(--accent-cyan);
         }
 
         .option-card.correct {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(21, 128, 61, 0.08);
             border-color: var(--accent-green);
             color: var(--accent-green);
         }
 
         .option-card.incorrect {
-            background: rgba(236, 72, 153, 0.15);
+            background: rgba(219, 39, 119, 0.08);
             border-color: var(--accent-pink);
             color: var(--accent-pink);
         }
@@ -473,38 +475,39 @@
 
         .btn {
             background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
-            color: var(--text-primary);
+            color: #ffffff;
             border: none;
             padding: 12px 24px;
             border-radius: 12px;
             font-family: var(--font-outfit);
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 4px 12px rgba(8, 145, 178, 0.2);
             transition: var(--transition-smooth);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 6px 18px rgba(8, 145, 178, 0.3);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            color: var(--text-secondary);
+            border: 1px solid #cbd5e1;
             box-shadow: none;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #f1f5f9;
+            color: var(--text-primary);
             box-shadow: none;
         }
 
         .quiz-feedback {
             margin-top: 20px;
-            background: rgba(15, 23, 42, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
             padding: 18px;
             display: none;
@@ -565,17 +568,17 @@
             <div class="circle-svg-wrapper">
                 <svg id="unit-circle" viewBox="-120 -120 240 240">
                     <!-- Grid background -->
-                    <circle cx="0" cy="0" r="100" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                    <circle cx="0" cy="0" r="70.7" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1" stroke-dasharray="2,2"/>
-                    <circle cx="0" cy="0" r="50" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1" stroke-dasharray="2,2"/>
+                    <circle cx="0" cy="0" r="100" fill="none" stroke="rgba(15, 23, 42, 0.08)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                    <circle cx="0" cy="0" r="70.7" fill="none" stroke="rgba(15, 23, 42, 0.05)" stroke-width="1" stroke-dasharray="2,2"/>
+                    <circle cx="0" cy="0" r="50" fill="none" stroke="rgba(15, 23, 42, 0.05)" stroke-width="1" stroke-dasharray="2,2"/>
                     
                     <!-- Axes -->
-                    <line x1="-115" y1="0" x2="115" y2="0" stroke="#475569" stroke-width="1.5" />
-                    <line x1="0" y1="-115" x2="0" y2="115" stroke="#475569" stroke-width="1.5" />
+                    <line x1="-115" y1="0" x2="115" y2="0" stroke="#334155" stroke-width="1.5" />
+                    <line x1="0" y1="-115" x2="0" y2="115" stroke="#334155" stroke-width="1.5" />
                     
                     <!-- Notable angles faint rays -->
                     <!-- 30, 45, 60, 120, 135, 150, 210, 225, 240, 300, 315, 330 -->
-                    <g opacity="0.15" stroke="rgba(255,255,255,0.4)" stroke-width="0.8">
+                    <g opacity="0.25" stroke="rgba(15,23,42,0.3)" stroke-width="0.8">
                         <line x1="0" y1="0" x2="86.6" y2="-50" />
                         <line x1="0" y1="0" x2="70.7" y2="-70.7" />
                         <line x1="0" y1="0" x2="50" y2="-86.6" />
@@ -591,15 +594,15 @@
                     </g>
                     
                     <!-- Main Circle -->
-                    <circle cx="0" cy="0" r="100" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+                    <circle cx="0" cy="0" r="100" fill="none" stroke="rgba(15, 23, 42, 0.12)" stroke-width="2"/>
                     
                     <!-- Trigonometric bars (Sine: Pink, Cosine: Blue, Tangent: Green) -->
                     <line id="svg-cos-line" x1="0" y1="0" x2="86.6" y2="0" stroke="var(--accent-blue)" stroke-width="2.5" />
                     <line id="svg-sin-line" x1="86.6" y1="0" x2="86.6" y2="-50" stroke="var(--accent-pink)" stroke-width="2.5" />
                     
                     <!-- Radial arm -->
-                    <line id="svg-arm" x1="0" y1="0" x2="86.6" y2="-50" stroke="#f8fafc" stroke-width="2" />
-                    <circle id="svg-arm-endpoint" cx="86.6" cy="-50" r="5" fill="#f8fafc" stroke="var(--accent-cyan)" stroke-width="2" style="cursor: pointer;"/>
+                    <line id="svg-arm" x1="0" y1="0" x2="86.6" y2="-50" stroke="#0f172a" stroke-width="2" />
+                    <circle id="svg-arm-endpoint" cx="86.6" cy="-50" r="5" fill="#ffffff" stroke="var(--accent-cyan)" stroke-width="2" style="cursor: pointer;"/>
                     
                     <!-- Angle Arc -->
                     <path id="svg-angle-arc" d="M 15 0 A 15 15 0 0 0 13 -7.5 L 0 0 Z" fill="rgba(6, 182, 212, 0.25)" stroke="var(--accent-cyan)" stroke-width="1" />

@@ -409,8 +409,8 @@ def create_course_content():
             "title": "Inicio",
             "content": """<h1>Trigonometría para Nivelación Universitaria</h1>
             <p>Bienvenido al curso de <strong>Trigonometría para Nivelación Universitaria</strong>. Este espacio ha sido especialmente estructurado para dotar a los estudiantes de primer ingreso universitario de los cimientos conceptuales, analíticos e interactivos requeridos en las cátedras de cálculo, física e ingeniería.</p>
-            <div style="background: rgba(30, 41, 59, 0.4); border-left: 4px solid #06b6d4; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                <p style="margin: 0; color: #cbd5e1;"><strong>Objetivo del Curso:</strong> Dominar la relación entre las razones geométricas de los triángulos y la funciones circulares en el plano analítico, aplicando identidades, ecuaciones y leyes de resolución en escenarios teóricos e interactivos en 3 niveles de dificultad progresivos.</p>
+            <div style="background: #ecfeff; border: 1px solid #cffafe; border-left: 4px solid #06b6d4; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 0; color: #0f172a;"><strong>Objetivo del Curso:</strong> Dominar la relación entre las razones geométricas de los triángulos y la funciones circulares en el plano analítico, aplicando identidades, ecuaciones y leyes de resolución en escenarios teóricos e interactivos en 3 niveles de dificultad progresivos.</p>
             </div>
             <h3>Estructura del Curso:</h3>
             <ul>
@@ -431,7 +431,7 @@ def create_course_content():
                         <li><strong>Radianes (rad)</strong>: Define una revolución completa en términos de la longitud del arco del círculo unitario, donde una vuelta completa equivale a \( 2\pi \) radianes. Un radián es la medida del ángulo central que subtiende un arco de longitud igual al radio.</li>
                     </ol>
                     <h3>Equivalencia Fundamental:</h3>
-                    <div class="formula-box" style="background:rgba(15,23,42,0.4); padding:10px; border-radius:8px; border-left:3px solid #ec4899; font-family:monospace; color:#38bdf8; margin:15px 0;">
+                    <div class="formula-box" style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #db2777; padding:12px 18px; border-radius:8px; font-family:monospace; color:#0f172a; font-weight:600; margin:15px 0;">
                         180° = π rad &nbsp;&nbsp;⇒&nbsp;&nbsp; Radianes = Grados × (π / 180)<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒&nbsp;&nbsp; Grados = Radianes × (180 / π)
                     </div>
@@ -446,8 +446,8 @@ def create_course_content():
                     "title": "Módulo 2: Razones Trigonométricas",
                     "content": """<h2>Triángulos Rectángulos</h2>
                     <p>Para un ángulo agudo \( \theta \) ubicado dentro de un triángulo rectángulo, definimos las seis razones trigonométricas clásicas basándonos en las longitudes de los catetos opuesto (CO), adyacente (CA) y la hipotenusa (H).</p>
-                    <table border="1" cellpadding="8" style="border-collapse:collapse; border-color:rgba(255,255,255,0.1); width:100%; text-align:center; background:rgba(30,41,59,0.2); margin:15px 0;">
-                        <tr style="background:rgba(15,23,42,0.6); color:#06b6d4;">
+                    <table border="1" cellpadding="8" style="border-collapse:collapse; border-color:#cbd5e1; width:100%; text-align:center; background:#ffffff; margin:15px 0;">
+                        <tr style="background:#f1f5f9; color:#0f172a; font-weight:700;">
                             <th>Razón Trigonométrica</th>
                             <th>Abreviatura</th>
                             <th>Fórmula del Triángulo</th>
@@ -498,15 +498,15 @@ def create_course_content():
                     <p>El Círculo Unitario es una herramienta analítica sumamente potente. Se define como una circunferencia centrada en el origen \( (0,0) \) con un radio exactamente igual a <strong>1</strong>. Su ecuación matemática es:</p>
                     <p align="center"><strong>\( x^2 + y^2 = 1 \)</strong></p>
                     <p>Si trazamos un ángulo \( \theta \) en posición estándar (medido desde el eje X positivo contrarreloj), la intersección del lado terminal con el círculo define un punto \( P(x, y) \). De este modo, generalizamos las funciones trigonométricas para cualquier ángulo:</p>
-                    <div class="formula-box" style="background:rgba(15,23,42,0.4); padding:10px; border-radius:8px; border-left:3px solid #a855f7; font-family:monospace; color:#38bdf8; margin:15px 0;">
+                    <div class="formula-box" style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #a855f7; padding:12px 18px; border-radius:8px; font-family:monospace; color:#0f172a; font-weight:600; margin:15px 0;">
                         cos(θ) = x<br>
                         sen(θ) = y<br>
-                        tan(θ) = y / x &nbsp;(para x ≠ 0)
+                        tan(θ) = y / x &nbsp;(para x &ne; 0)
                     </div>
                     <h3>Visualización Profesional de la Circunferencia</h3>
                     <p>A continuación se presenta la circunferencia trigonométrica vectorial detallando los ángulos notables más utilizados, expresados simultáneamente en grados, radianes y sus coordenadas cartesianas exactas:</p>
                     <div style="text-align:center; margin:20px 0;">
-                        <img src="resources/trig_circle.svg" alt="Circunferencia Trigonométrica Profesional" style="max-width:100%; width:450px; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.08);"/>
+                        <img src="resources/trig_circle.svg" alt="Circunferencia Trigonométrica Profesional" style="max-width:100%; width:450px; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,0.05); border:1px solid #e2e8f0;"/>
                     </div>
                     <h3>Signos de las Funciones por Cuadrantes:</h3>
                     <ul>
@@ -545,14 +545,14 @@ def create_course_content():
                     
                     <h3>1. Ley de Senos</h3>
                     <p>Establece que las longitudes de los lados de un triángulo son proporcionales a los senos de sus respectivos ángulos opuestos:</p>
-                    <p align="center" style="font-size:1.15rem; color:#06b6d4;">
+                    <p align="center" style="font-size:1.15rem; color:#0891b2;">
                         <strong>\( \\frac{a}{sen(A)} = \\frac{b}{sen(B)} = \\frac{c}{sen(C)} \)</strong>
                     </p>
                     <p><em>Aplicación ideal:</em> Cuando conocemos un lado y dos ángulos (ALA, LAA), o cuando conocemos dos lados y el ángulo opuesto a uno de ellos (LLA - caso ambiguo).</p>
                     
                     <h3>2. Ley de Cosenos</h3>
                     <p>Es una generalización del Teorema de Pitágoras aplicable a cualquier triángulo. Relaciona un lado con los otros dos y el coseno del ángulo comprendido entre ellos:</p>
-                    <p align="center" style="font-size:1.15rem; color:#ec4899;">
+                    <p align="center" style="font-size:1.15rem; color:#db2777;">
                         <strong>\( c^2 = a^2 + b^2 - 2ab \cdot cos(C) \)</strong>
                     </p>
                     <p>U análogamente para los otros lados:<br>
@@ -652,7 +652,7 @@ def generate_content_xml(meta, course_data):
         if page["quiz"]:
             # --- COMPONENT 2: INTERACTIVE SOLVER IFRAME ---
             b_id_solver = generate_block_id()
-            iframe_html = '<h2 style="margin-top:20px;">Simulador Interactivo Práctico</h2><p>Interactúa con el siguiente simulador para resolver de manera gráfica e instantánea cualquier problema relacionado con el tema actual:</p><iframe src="resources/trig_solver.html" style="width:100%; height:750px; border:none; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.25); background:#1e293b;"></iframe>'
+            iframe_html = '<h2 style="margin-top:20px;">Simulador Interactivo Práctico</h2><p>Interactúa con el siguiente simulador para resolver de manera gráfica e instantánea cualquier problema relacionado con el tema actual:</p><iframe src="resources/trig_solver.html" style="width:100%; height:750px; border:none; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,0.05); border:1px solid #cbd5e1; background:#f8fafc;"></iframe>'
             xml += f'      <odePagStructure><odePageId>{page["id"]}</odePageId><odeBlockId>{b_id_solver}</odeBlockId><blockName>Simulador Interactivo</blockName><odePagStructureOrder>1</odePagStructureOrder><odePagStructureProperties/><odeComponents>\n'
             xml += f'        <odeComponent><odePageId>{page["id"]}</odePageId><odeBlockId>{b_id_solver}</odeBlockId><odeIdeviceId>{generate_idevice_id()}</odeIdeviceId><odeIdeviceTypeName>FreeTextIdevice</odeIdeviceTypeName><htmlView><![CDATA[{iframe_html}]]></htmlView><jsonProperties>{{}}</jsonProperties><odeComponentsOrder>0</odeComponentsOrder></odeComponent>\n'
             xml += '      </odeComponents></odePagStructure>\n'
