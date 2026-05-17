@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador y Solucionador de Trigonometría Profesional</title>
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --panel-bg: rgba(30, 41, 59, 0.7);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-orange: #f97316;
+            --font-outfit: 'Outfit', 'Inter', sans-serif;
+            --font-inter: 'Inter', sans-serif;
+            --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-inter);
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border-bottom: 1px solid var(--panel-border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-family: var(--font-outfit);
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1.1fr 1.2fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Glassmorphic Panel Base Style */
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 25px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-premium);
+            transition: var(--transition-smooth);
+        }
+
+        .panel:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .panel-title {
+            font-family: var(--font-outfit);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px;
+        }
+
+        .panel-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 20px;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-pink));
+            border-radius: 3px;
+        }
+
+        /* Unit Circle Visualizer Panel */
+        .visualizer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .circle-svg-wrapper {
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 1;
+            position: relative;
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        svg#unit-circle {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .controls {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(15, 23, 42, 0.2);
+            padding: 12px 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .slider-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 60px;
+        }
+
+        input[type="range"] {
+            flex-grow: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #334155;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+            transition: var(--transition-smooth);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .inputs-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-box label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .input-with-unit {
+            display: flex;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px 12px;
+            transition: var(--transition-smooth);
+        }
+
+        .input-with-unit:focus-within {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.2);
+        }
+
+        .input-with-unit input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            outline: none;
+            font-family: var(--font-inter);
+        }
+
+        .input-with-unit span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Values and Solver Panel */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .value-card {
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .value-card:hover {
+            transform: translateY(-2px);
+            background: rgba(15, 23, 42, 0.5);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .value-card .fn-name {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 5px;
+        }
+
+        .value-card.sin .fn-name { color: var(--accent-pink); }
+        .value-card.cos .fn-name { color: var(--accent-blue); }
+        .value-card.tan .fn-name { color: var(--accent-green); }
+        .value-card.csc .fn-name { color: var(--accent-orange); }
+        .value-card.sec .fn-name { color: var(--accent-cyan); }
+        .value-card.cot .fn-name { color: #a855f7; }
+
+        .value-card .exact-val {
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: var(--font-outfit);
+            margin-bottom: 2px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .value-card .decimal-val {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .solver-step {
+            background: rgba(15, 23, 42, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 18px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .solver-step h3 {
+            font-family: var(--font-outfit);
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .solver-step p {
+            margin-bottom: 8px;
+            color: #cbd5e1;
+        }
+
+        .solver-step strong {
+            color: var(--text-primary);
+        }
+
+        .formula-box {
+            background: rgba(15, 23, 42, 0.4);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #38bdf8;
+            margin: 5px 0 10px 0;
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        /* Practice Area Panel */
+        .practice-section {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 10px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-family: var(--font-outfit);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .tab-btn.active {
+            color: var(--text-primary);
+            background: var(--accent-cyan);
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+            border-color: var(--accent-cyan);
+        }
+
+        .quiz-card {
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 15px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .diff-easy { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .diff-medium { background: rgba(249, 115, 22, 0.15); color: var(--accent-orange); border: 1px solid rgba(249, 115, 22, 0.3); }
+        .diff-hard { background: rgba(236, 72, 153, 0.15); color: var(--accent-pink); border: 1px solid rgba(236, 72, 153, 0.3); }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            font-family: var(--font-outfit);
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-card:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: var(--accent-cyan);
+            transform: translateX(2px);
+        }
+
+        .option-card.selected {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+
+        .option-card.correct {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .option-card.incorrect {
+            background: rgba(236, 72, 153, 0.15);
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+
+        .quiz-action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            color: var(--text-primary);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-family: var(--font-outfit);
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            transition: var(--transition-smooth);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(6, 182, 212, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+
+        .quiz-feedback {
+            margin-top: 20px;
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .feedback-title {
+            font-family: var(--font-outfit);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-feedback.correct-fb { border-left: 4px solid var(--accent-green); }
+        .quiz-feedback.correct-fb .feedback-title { color: var(--accent-green); }
+        .quiz-feedback.incorrect-fb { border-left: 4px solid var(--accent-pink); }
+        .quiz-feedback.incorrect-fb .feedback-title { color: var(--accent-pink); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--panel-border);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.25); padding: 10px 20px; border-radius: 12px; display: inline-block; margin-bottom: 20px; font-size: 0.9rem; font-weight: 500; font-family: var(--font-inter);">
+            🎓 <strong>Material Didáctico Abierto:</strong> Creado por <a href="https://ofitech.lat/clases" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-weight: 700;">Ofitech.lat</a> para el <strong>Repositorio Abierto de Academia UPC</strong>.
+        </div>
+        <h1>Simulador y Solucionador Trigonométrico</h1>
+        <p>Visualiza el Círculo Unitario, resuelve ángulos paso a paso y practica con infinitas preguntas multinivel.</p>
+    </header>
+
+    <div class="container">
+        <!-- Visualizer Panel -->
+        <div class="panel visualizer-container">
+            <div class="panel-title" style="align-self: flex-start; width: 100%;">Visualizador Círculo Unitario</div>
+            
+            <div class="circle-svg-wrapper">
+                <svg id="unit-circle" viewBox="-120 -120 240 240">
+                    <!-- Grid background -->
+                    <circle cx="0" cy="0" r="100" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                    <circle cx="0" cy="0" r="70.7" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1" stroke-dasharray="2,2"/>
+                    <circle cx="0" cy="0" r="50" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1" stroke-dasharray="2,2"/>
+                    
+                    <!-- Axes -->
+                    <line x1="-115" y1="0" x2="115" y2="0" stroke="#475569" stroke-width="1.5" />
+                    <line x1="0" y1="-115" x2="0" y2="115" stroke="#475569" stroke-width="1.5" />
+                    
+                    <!-- Notable angles faint rays -->
+                    <!-- 30, 45, 60, 120, 135, 150, 210, 225, 240, 300, 315, 330 -->
+                    <g opacity="0.15" stroke="rgba(255,255,255,0.4)" stroke-width="0.8">
+                        <line x1="0" y1="0" x2="86.6" y2="-50" />
+                        <line x1="0" y1="0" x2="70.7" y2="-70.7" />
+                        <line x1="0" y1="0" x2="50" y2="-86.6" />
+                        <line x1="0" y1="0" x2="-50" y2="-86.6" />
+                        <line x1="0" y1="0" x2="-70.7" y2="-70.7" />
+                        <line x1="0" y1="0" x2="-86.6" y2="-50" />
+                        <line x1="0" y1="0" x2="-86.6" y2="50" />
+                        <line x1="0" y1="0" x2="-70.7" y2="70.7" />
+                        <line x1="0" y1="0" x2="-50" y2="86.6" />
+                        <line x1="0" y1="0" x2="50" y2="86.6" />
+                        <line x1="0" y1="0" x2="70.7" y2="70.7" />
+                        <line x1="0" y1="0" x2="86.6" y2="50" />
+                    </g>
+                    
+                    <!-- Main Circle -->
+                    <circle cx="0" cy="0" r="100" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+                    
+                    <!-- Trigonometric bars (Sine: Pink, Cosine: Blue, Tangent: Green) -->
+                    <line id="svg-cos-line" x1="0" y1="0" x2="86.6" y2="0" stroke="var(--accent-blue)" stroke-width="2.5" />
+                    <line id="svg-sin-line" x1="86.6" y1="0" x2="86.6" y2="-50" stroke="var(--accent-pink)" stroke-width="2.5" />
+                    
+                    <!-- Radial arm -->
+                    <line id="svg-arm" x1="0" y1="0" x2="86.6" y2="-50" stroke="#f8fafc" stroke-width="2" />
+                    <circle id="svg-arm-endpoint" cx="86.6" cy="-50" r="5" fill="#f8fafc" stroke="var(--accent-cyan)" stroke-width="2" style="cursor: pointer;"/>
+                    
+                    <!-- Angle Arc -->
+                    <path id="svg-angle-arc" d="M 15 0 A 15 15 0 0 0 13 -7.5 L 0 0 Z" fill="rgba(6, 182, 212, 0.25)" stroke="var(--accent-cyan)" stroke-width="1" />
+                    
+                    <!-- Interactive Handle (larger invisible area for easier grabbing) -->
+                    <circle id="svg-interactive-handle" cx="86.6" cy="-50" r="12" fill="transparent" style="cursor: pointer;"/>
+                </svg>
+            </div>
+            
+            <div class="controls">
+                <div class="slider-group">
+                    <label for="deg-range">Ángulo</label>
+                    <input type="range" id="deg-range" min="0" max="360" value="30">
+                </div>
+                
+                <div class="inputs-row">
+                    <div class="input-box">
+                        <label for="deg-input">Grados</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="deg-input" min="0" max="360" value="30">
+                            <span>°</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-box">
+                        <label for="rad-input">Radianes</label>
+                        <div class="input-with-unit">
+                            <input type="text" id="rad-input" value="π/6">
+                            <span>rad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Solutions & Theory Panel -->
+        <div class="panel">
+            <div class="panel-title">Resolución Paso a Paso</div>
+            
+            <div class="values-grid">
+                <div class="value-card sin">
+                    <div class="fn-name">Seno (sen)</div>
+                    <div class="exact-val" id="val-sin">1/2</div>
+                    <div class="decimal-val" id="dec-sin">0.5000</div>
+                </div>
+                <div class="value-card cos">
+                    <div class="fn-name">Coseno (cos)</div>
+                    <div class="exact-val" id="val-cos">√3/2</div>
+                    <div class="decimal-val" id="dec-cos">0.8660</div>
+                </div>
+                <div class="value-card tan">
+                    <div class="fn-name">Tangente (tan)</div>
+                    <div class="exact-val" id="val-tan">√3/3</div>
+                    <div class="decimal-val" id="dec-tan">0.5774</div>
+                </div>
+                <div class="value-card csc">
+                    <div class="fn-name">Cosecante (csc)</div>
+                    <div class="exact-val" id="val-csc">2</div>
+                    <div class="decimal-val" id="dec-csc">2.0000</div>
+                </div>
+                <div class="value-card sec">
+                    <div class="fn-name">Secante (sec)</div>
+                    <div class="exact-val" id="val-sec">2√3/3</div>
+                    <div class="decimal-val" id="dec-sec">1.1547</div>
+                </div>
+                <div class="value-card cot">
+                    <div class="fn-name">Cotangente (cot)</div>
+                    <div class="exact-val" id="val-cot">√3</div>
+                    <div class="decimal-val" id="dec-cot">1.7321</div>
+                </div>
+            </div>
+            
+            <div class="solver-step" id="step-by-step">
+                <h3>Análisis Analítico</h3>
+                <p>Para el ángulo seleccionado <strong>θ = 30°</strong>:</p>
+                <div class="formula-box">Cuadrante: I (Sen +, Cos +)</div>
+                <p>1. El ángulo se encuentra en el <strong>Cuadrante I</strong>.</p>
+                <p>2. Por tanto, todas las razones trigonométricas son <strong>positivas</strong>.</p>
+                <p>3. Las coordenadas del punto en el círculo unitario son <strong>(cos θ, sen θ) = (√3/2, 1/2)</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic Practice Panel -->
+    <div class="panel practice-section">
+        <div class="panel-title">Práctica Dinámica de Autoevaluación</div>
+        
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="loadQuiz('easy')">Básico</button>
+            <button class="tab-btn" onclick="loadQuiz('medium')">Intermedio</button>
+            <button class="tab-btn" onclick="loadQuiz('hard')">Avanzado</button>
+        </div>
+        
+        <div class="quiz-card" id="quiz-container">
+            <!-- Dynamic Content -->
+            <div class="quiz-header">
+                <span class="difficulty-badge diff-easy" id="quiz-diff">Fácil</span>
+                <span id="quiz-theme">Tema: Círculo Unitario</span>
+            </div>
+            <div class="quiz-question" id="quiz-question-text">
+                Cargando pregunta...
+            </div>
+            <div class="quiz-options" id="quiz-options-container">
+                <!-- Option cards will go here -->
+            </div>
+            <div class="quiz-action-bar">
+                <button class="btn btn-secondary" onclick="generateNextQuestion()">Generar Nueva Pregunta</button>
+                <button class="btn" id="submit-quiz-btn" onclick="checkQuizAnswer()">Comprobar Respuesta</button>
+            </div>
+            
+            <div class="quiz-feedback" id="quiz-feedback-box">
+                <div class="feedback-title" id="feedback-title">¡Correcto!</div>
+                <p id="feedback-text">Explicación del ejercicio...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 50px; padding: 30px 20px; border-top: 1px solid var(--panel-border);">
+        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 16px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow-premium);">
+            <p style="margin-bottom: 12px; font-size: 1.05rem; font-weight: 600; color: var(--text-primary);">
+                Material Didáctico creado por <strong>Ofitech.lat</strong> para el <strong>Repositorio Abierto de Academia UPC</strong>.
+            </p>
+            <p style="margin-bottom: 20px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+                Código fuente disponible en el repositorio Git público de la academia:<br>
+                <a href="https://github.com/ofitechlat/academiaupcrepositorioabierto.git" target="_blank" style="color: var(--accent-pink); text-decoration: none; font-weight: 600; word-break: break-all;">
+                    https://github.com/ofitechlat/academiaupcrepositorioabierto.git
+                </a>
+            </p>
+            <a href="https://ofitech.lat/clases" target="_blank" class="btn" style="text-decoration: none; display: inline-block; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink)); box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3); padding: 14px 32px; font-size: 1.05rem; border-radius: 12px; font-family: var(--font-outfit); font-weight: 700; transition: var(--transition-smooth);">
+                🚀 Ir a Clases - Academia Ofitech.lat
+            </a>
+        </div>
+        <p>&copy; 2026 Plataforma de Trigonometría Interactiva. Compatible con eXeLearning v4 y Moodle (SCORM).</p>
+    </footer>
+
+    <script>
+        // Trigonometric notable values dictionary for exact representations
+        const notableValues = {
+            0: { rad: "0", sin: "0", cos: "1", tan: "0", csc: "Ø", sec: "1", cot: "Ø" },
+            30: { rad: "π/6", sin: "1/2", cos: "√3/2", tan: "√3/3", csc: "2", sec: "2√3/3", cot: "√3" },
+            45: { rad: "π/4", sin: "√2/2", cos: "√2/2", tan: "1", csc: "√2", sec: "√2", cot: "1" },
+            60: { rad: "π/3", sin: "√3/2", cos: "1/2", tan: "√3", csc: "2√3/3", sec: "2", cot: "√3/3" },
+            90: { rad: "π/2", sin: "1", cos: "0", tan: "Ø", csc: "1", sec: "Ø", cot: "0" },
+            120: { rad: "2π/3", sin: "√3/2", cos: "-1/2", tan: "-√3", csc: "2√3/3", sec: "-2", cot: "-√3/3" },
+            135: { rad: "3π/4", sin: "√2/2", cos: "-√2/2", tan: "-1", csc: "√2", sec: "-√2", cot: "-1" },
+            150: { rad: "5π/6", sin: "1/2", cos: "-√3/2", tan: "-√3/3", csc: "2", sec: "-2√3/3", cot: "-√3" },
+            180: { rad: "π", sin: "0", cos: "-1", tan: "0", csc: "Ø", sec: "-1", cot: "Ø" },
+            210: { rad: "7π/6", sin: "-1/2", cos: "-√3/2", tan: "√3/3", csc: "-2", sec: "-2√3/3", cot: "√3" },
+            225: { rad: "5π/4", sin: "-√2/2", cos: "-√2/2", tan: "1", csc: "-√2", sec: "-√2", cot: "1" },
+            240: { rad: "4π/3", sin: "-√3/2", cos: "-1/2", tan: "√3", csc: "-2√3/3", sec: "-2", cot: "√3/3" },
+            270: { rad: "3π/2", sin: "-1", cos: "0", tan: "Ø", csc: "-1", sec: "Ø", cot: "0" },
+            300: { rad: "5π/3", sin: "-√3/2", cos: "1/2", tan: "-√3", csc: "-2√3/3", sec: "2", cot: "-√3/3" },
+            315: { rad: "7π/4", sin: "-√2/2", cos: "√2/2", tan: "-1", csc: "-√2", sec: "√2", cot: "-1" },
+            330: { rad: "11π/6", sin: "-1/2", cos: "√3/2", tan: "-√3/3", csc: "-2", sec: "2√3/3", cot: "-√3" },
+            360: { rad: "2π", sin: "0", cos: "1", tan: "0", csc: "Ø", sec: "1", cot: "Ø" }
+        };
+
+        // DOM elements
+        const degRange = document.getElementById("deg-range");
+        const degInput = document.getElementById("deg-input");
+        const radInput = document.getElementById("rad-input");
+        const svgArm = document.getElementById("svg-arm");
+        const svgEndpoint = document.getElementById("svg-arm-endpoint");
+        const svgHandle = document.getElementById("svg-interactive-handle");
+        const svgSinLine = document.getElementById("svg-sin-line");
+        const svgCosLine = document.getElementById("svg-cos-line");
+        const svgAngleArc = document.getElementById("svg-angle-arc");
+
+        const valSin = document.getElementById("val-sin");
+        const valCos = document.getElementById("val-cos");
+        const valTan = document.getElementById("val-tan");
+        const valCsc = document.getElementById("val-csc");
+        const valSec = document.getElementById("val-sec");
+        const valCot = document.getElementById("val-cot");
+
+        const decSin = document.getElementById("dec-sin");
+        const decCos = document.getElementById("dec-cos");
+        const decTan = document.getElementById("dec-tan");
+        const decCsc = document.getElementById("dec-csc");
+        const decSec = document.getElementById("dec-sec");
+        const decCot = document.getElementById("dec-cot");
+
+        const stepByStep = document.getElementById("step-by-step");
+
+        let currentAngle = 30; // in degrees
+
+        // Synchronize and render everything
+        function updateAll(angle, origin = "") {
+            currentAngle = Math.round(((angle % 360) + 360) % 360);
+            
+            // Sync inputs
+            if (origin !== "range") degRange.value = currentAngle;
+            if (origin !== "input") degInput.value = currentAngle;
+            if (origin !== "rad") {
+                // Set rad expression
+                if (notableValues[currentAngle]) {
+                    radInput.value = notableValues[currentAngle].rad;
+                } else {
+                    const radDecimal = (currentAngle * Math.PI / 180).toFixed(4);
+                    radInput.value = radDecimal;
+                }
+            }
+
+            // Sync visualizer elements
+            const angleRad = currentAngle * Math.PI / 180;
+            const x = 100 * Math.cos(angleRad);
+            const y = -100 * Math.sin(angleRad); // SVG y axis is inverted
+
+            // Radial arm and endpoint
+            svgArm.setAttribute("x2", x);
+            svgArm.setAttribute("y2", y);
+            svgEndpoint.setAttribute("cx", x);
+            svgEndpoint.setAttribute("cy", y);
+            svgHandle.setAttribute("cx", x);
+            svgHandle.setAttribute("cy", y);
+
+            // Sine and Cosine projection lines
+            svgCosLine.setAttribute("x2", x);
+            svgSinLine.setAttribute("x1", x);
+            svgSinLine.setAttribute("y1", 0);
+            svgSinLine.setAttribute("x2", x);
+            svgSinLine.setAttribute("y2", y);
+
+            // Angle arc path drawing
+            let pathD = "";
+            if (currentAngle > 0) {
+                const rx = 20;
+                const ry = 20;
+                const sweepFlag = 0; // counter-clockwise in screen coordinates since y is negative
+                const targetX = rx * Math.cos(angleRad);
+                const targetY = -ry * Math.sin(angleRad);
+                const largeArc = currentAngle > 180 ? 1 : 0;
+                pathD = `M ${rx} 0 A ${rx} ${ry} 0 ${largeArc} ${sweepFlag} ${targetX} ${targetY} L 0 0 Z`;
+            }
+            svgAngleArc.setAttribute("d", pathD);
+
+            // Calculate exact & decimal values
+            const sinVal = Math.sin(angleRad);
+            const cosVal = Math.cos(angleRad);
+            const tanVal = Math.tan(angleRad);
+
+            decSin.textContent = sinVal.toFixed(4);
+            decCos.textContent = cosVal.toFixed(4);
+            decTan.textContent = Math.abs(tanVal) > 100 ? "Infinita" : tanVal.toFixed(4);
+
+            decCsc.textContent = Math.abs(sinVal) < 0.001 ? "Indefinido" : (1 / sinVal).toFixed(4);
+            decSec.textContent = Math.abs(cosVal) < 0.001 ? "Indefinido" : (1 / cosVal).toFixed(4);
+            decCot.textContent = Math.abs(tanVal) < 0.001 ? "Indefinido" : (1 / tanVal).toFixed(4);
+
+            // Set exact values
+            if (notableValues[currentAngle]) {
+                const nv = notableValues[currentAngle];
+                valSin.textContent = nv.sin;
+                valCos.textContent = nv.cos;
+                valTan.textContent = nv.tan;
+                valCsc.textContent = nv.csc;
+                valSec.textContent = nv.sec;
+                valCot.textContent = nv.cot;
+            } else {
+                valSin.textContent = sinVal.toFixed(2);
+                valCos.textContent = cosVal.toFixed(2);
+                valTan.textContent = Math.abs(tanVal) > 100 ? "Ø" : tanVal.toFixed(2);
+                valCsc.textContent = Math.abs(sinVal) < 0.01 ? "Ø" : (1/sinVal).toFixed(2);
+                valSec.textContent = Math.abs(cosVal) < 0.01 ? "Ø" : (1/cosVal).toFixed(2);
+                valCot.textContent = Math.abs(tanVal) < 0.01 ? "Ø" : (1/tanVal).toFixed(2);
+            }
+
+            // Generate Step-by-Step explanation
+            generateExplanation(currentAngle);
+        }
+
+        // Generate dynamic explanation
+        function generateExplanation(deg) {
+            let quad = "";
+            let signs = "";
+            let refFormula = "";
+            let refAngle = 0;
+            
+            if (deg >= 0 && deg <= 90) {
+                quad = "I";
+                refAngle = deg;
+                signs = "todas las funciones son <strong>positivas</strong>";
+                refFormula = "θ<sub>ref</sub> = θ";
+            } else if (deg > 90 && deg <= 180) {
+                quad = "II";
+                refAngle = 180 - deg;
+                signs = "el <strong>seno (y)</strong> es <strong>positivo</strong>, mientras que el <strong>coseno (x)</strong> es <strong>negativo</strong>";
+                refFormula = "θ<sub>ref</sub> = 180° - θ";
+            } else if (deg > 180 && deg <= 270) {
+                quad = "III";
+                refAngle = deg - 180;
+                signs = "la <strong>tangente</strong> es <strong>positiva</strong> (seno / coseno), mientras que el <strong>seno (y)</strong> y el <strong>coseno (x)</strong> son <strong>negativos</strong>";
+                refFormula = "θ<sub>ref</sub> = θ - 180°";
+            } else {
+                quad = "IV";
+                refAngle = 360 - deg;
+                signs = "el <strong>coseno (x)</strong> es <strong>positivo</strong>, mientras que el <strong>seno (y)</strong> es <strong>negativo</strong>";
+                refFormula = "θ<sub>ref</sub> = 360° - θ";
+            }
+
+            const isNotable = notableValues[deg];
+            const coordX = isNotable ? notableValues[deg].cos : Math.cos(deg * Math.PI / 180).toFixed(3);
+            const coordY = isNotable ? notableValues[deg].sin : Math.sin(deg * Math.PI / 180).toFixed(3);
+
+            let html = `
+                <h3>Análisis Analítico</h3>
+                <p>Para el ángulo seleccionado <strong>θ = ${deg}°</strong>:</p>
+                <div class="formula-box">Cuadrante: ${quad} | Fórmula de referencia: ${refFormula}</div>
+                <p>1. El ángulo se ubica en el <strong>Cuadrante ${quad}</strong>.</p>
+                <p>2. En este cuadrante, ${signs}.</p>
+                <p>3. El ángulo de referencia para cálculos exactos es <strong>θ<sub>ref</sub> = ${refAngle}°</strong>.</p>
+                <p>4. Las coordenadas del punto terminal en el círculo unitario son:<br>
+                   <strong>(x, y) = (cos θ, sen θ) = (${coordX}, ${coordY})</strong>.</p>
+            `;
+            stepByStep.innerHTML = html;
+        }
+
+        // Radian input parser
+        function parseRadian(str) {
+            str = str.toLowerCase().replace(/\s+/g, '');
+            if (!str) return 0;
+            if (str === "0") return 0;
+
+            let multiplier = 1;
+            let hasPi = false;
+
+            if (str.includes("pi") || str.includes("π")) {
+                hasPi = true;
+                str = str.replace("pi", "").replace("π", "");
+            }
+
+            if (str.includes("/")) {
+                const parts = str.split("/");
+                const num = parts[0] === "" ? 1 : (parts[0] === "-" ? -1 : parseFloat(parts[0]));
+                const den = parseFloat(parts[1]);
+                if (!isNaN(num) && !isNaN(den) && den !== 0) {
+                    multiplier = num / den;
+                }
+            } else {
+                if (str === "" || str === "+") multiplier = 1;
+                else if (str === "-") multiplier = -1;
+                else multiplier = parseFloat(str) || 0;
+            }
+
+            let rad = multiplier;
+            if (hasPi) rad = rad * Math.PI;
+
+            // Convert to degrees
+            return rad * 180 / Math.PI;
+        }
+
+        // Drag handle math logic
+        function handleMouseMove(e) {
+            const svgRect = document.getElementById("unit-circle").getBoundingClientRect();
+            const cx = svgRect.left + svgRect.width / 2;
+            const cy = svgRect.top + svgRect.height / 2;
+            const dx = e.clientX - cx;
+            const dy = e.clientY - cy; // screen y is down
+
+            // Calculate angle in radians, invert y because SVG Y increases downwards
+            let angleRad = Math.atan2(-dy, dx);
+            let angleDeg = angleRad * 180 / Math.PI;
+            if (angleDeg < 0) angleDeg += 360;
+
+            // Snap to notable angles if close (within 3 degrees)
+            for (let notable in notableValues) {
+                if (Math.abs(angleDeg - notable) < 3.5) {
+                    angleDeg = notable;
+                    break;
+                }
+            }
+
+            updateAll(angleDeg);
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            document.addEventListener("mousemove", handleMouseMove);
+            document.addEventListener("mouseup", stopDrag);
+            document.addEventListener("touchmove", handleTouchMove, { passive: false });
+            document.addEventListener("touchend", stopDrag);
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            handleMouseMove(touch);
+        }
+
+        function stopDrag() {
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", stopDrag);
+            document.removeEventListener("touchmove", handleTouchMove);
+            document.removeEventListener("touchend", stopDrag);
+        }
+
+        // Add event listeners
+        degRange.addEventListener("input", (e) => {
+            updateAll(parseFloat(e.target.value), "range");
+        });
+
+        degInput.addEventListener("input", (e) => {
+            let val = parseFloat(e.target.value) || 0;
+            updateAll(val, "input");
+        });
+
+        radInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                const deg = parseRadian(e.target.value);
+                updateAll(deg, "rad");
+            }
+        });
+
+        svgHandle.addEventListener("mousedown", startDrag);
+        svgHandle.addEventListener("touchstart", startDrag, { passive: false });
+
+
+        // ==========================================
+        // DYNAMIC QUIZ ENGINE (PARAMETRIC PRACTICE)
+        // ==========================================
+        let currentDifficulty = 'easy';
+        let currentQuestion = null;
+        let selectedOption = null;
+
+        const easyTheme = "Ángulos notables y signos";
+        const mediumTheme = "Cálculo de valores exactos";
+        const hardTheme = "Ecuaciones e identidades básicas";
+
+        function loadQuiz(diff) {
+            // Update active tab styling
+            document.querySelectorAll(".tab-btn").forEach(btn => {
+                btn.classList.remove("active");
+                if(btn.textContent.toLowerCase() === (diff === 'easy' ? 'básico' : diff === 'medium' ? 'intermedio' : 'avanzado')) {
+                    btn.classList.add("active");
+                }
+            });
+
+            currentDifficulty = diff;
+            generateNextQuestion();
+        }
+
+        // Generate questions programmatically using variables (spending fewer resources, generating infinite combinations!)
+        function generateNextQuestion() {
+            // Hide feedback
+            const feedbackBox = document.getElementById("quiz-feedback-box");
+            feedbackBox.classList.remove("show", "correct-fb", "incorrect-fb");
+            selectedOption = null;
+
+            // Notable angles pool
+            const anglesPool = [30, 45, 60, 120, 135, 150, 210, 225, 240, 300, 315, 330];
+            const randomAngle = anglesPool[Math.floor(Math.random() * anglesPool.length)];
+            const nv = notableValues[randomAngle];
+
+            const functions = ["sen", "cos", "tan"];
+            const randomFn = functions[Math.floor(Math.random() * functions.length)];
+
+            if (currentDifficulty === 'easy') {
+                document.getElementById("quiz-diff").textContent = "Básico";
+                document.getElementById("quiz-diff").className = "difficulty-badge diff-easy";
+                document.getElementById("quiz-theme").textContent = "Tema: " + easyTheme;
+
+                // 2 types of Easy questions
+                const qType = Math.random() > 0.5 ? "sign" : "convert";
+
+                if (qType === "sign") {
+                    const quadrants = [
+                        { name: "Cuadrante I", signs: { sen: "+", cos: "+", tan: "+" } },
+                        { name: "Cuadrante II", signs: { sen: "+", cos: "-", tan: "-" } },
+                        { name: "Cuadrante III", signs: { sen: "-", cos: "-", tan: "+" } },
+                        { name: "Cuadrante IV", signs: { sen: "-", cos: "+", tan: "-" } }
+                    ];
+                    const quad = quadrants[Math.floor(Math.random() * quadrants.length)];
+                    const fn = functions[Math.floor(Math.random() * functions.length)];
+                    const isPos = quad.signs[fn] === "+";
+
+                    currentQuestion = {
+                        text: `¿Cuál es el signo algebraico de la función <strong>${fn}(θ)</strong> si el ángulo θ se encuentra en el <strong>${quad.name}</strong>?`,
+                        options: ["Positivo (+)", "Negativo (-)"],
+                        answer: isPos ? 0 : 1,
+                        explanation: `En el ${quad.name}, el eje X representa el coseno y el eje Y representa el seno. Por tanto, para ${fn}(θ) el signo es ${quad.signs[fn] === "+" ? "positivo (+)" : "negativo (-)"}.`
+                    };
+                } else {
+                    const anglesConvert = [
+                        { deg: 30, rad: "π/6" },
+                        { deg: 45, rad: "π/4" },
+                        { deg: 60, rad: "π/3" },
+                        { deg: 90, rad: "π/2" },
+                        { deg: 120, rad: "2π/3" },
+                        { deg: 180, rad: "π" }
+                    ];
+                    const item = anglesConvert[Math.floor(Math.random() * anglesConvert.length)];
+                    const isDegToRad = Math.random() > 0.5;
+
+                    if (isDegToRad) {
+                        // Distractors
+                        const dist = [`${item.deg/15}π/5`, `π/${Math.round(180/item.deg)+1}`, `2π/${Math.round(360/item.deg)+1}`];
+                        const opts = [item.rad, dist[0], dist[1], dist[2]].sort(() => Math.random() - 0.5);
+
+                        currentQuestion = {
+                            text: `Convierte el ángulo de <strong>${item.deg}°</strong> de grados sexagesimales a radianes exactos.`,
+                            options: opts,
+                            answer: opts.indexOf(item.rad),
+                            explanation: `Para convertir de grados a radianes multiplicamos por π/180: ${item.deg}° * (π/180) = ${item.rad}.`
+                        };
+                    } else {
+                        const dist = [`${item.deg - 15}°`, `${item.deg + 15}°`, `${item.deg * 2}°`];
+                        const opts = [`${item.deg}°`, dist[0], dist[1], dist[2]].sort(() => Math.random() - 0.5);
+
+                        currentQuestion = {
+                            text: `Convierte el ángulo en radianes <strong>${item.rad}</strong> a grados sexagesimales.`,
+                            options: opts,
+                            answer: opts.indexOf(`${item.deg}°`),
+                            explanation: `Para convertir de radianes a grados multiplicamos por 180/π: ${item.rad} * (180/π) = ${item.deg}°.`
+                        };
+                    }
+                }
+            } else if (currentDifficulty === 'medium') {
+                document.getElementById("quiz-diff").textContent = "Intermedio";
+                document.getElementById("quiz-diff").className = "difficulty-badge diff-medium";
+                document.getElementById("quiz-theme").textContent = "Tema: " + mediumTheme;
+
+                // Exact values questions
+                let fnString = "";
+                let correctVal = "";
+                if (randomFn === "sen") { fnString = "sen"; correctVal = nv.sin; }
+                else if (randomFn === "cos") { fnString = "cos"; correctVal = nv.cos; }
+                else { fnString = "tan"; correctVal = nv.tan; }
+
+                // Collect other values as distractors
+                const allVals = ["0", "1", "-1", "1/2", "-1/2", "√3/2", "-√3/2", "√2/2", "-√2/2", "√3", "-√3", "√3/3", "-√3/3", "Ø"];
+                const distractors = allVals.filter(v => v !== correctVal).sort(() => Math.random() - 0.5).slice(0, 3);
+                const opts = [correctVal, ...distractors].sort(() => Math.random() - 0.5);
+
+                const useRad = Math.random() > 0.5;
+                const questionAngleExpr = useRad ? nv.rad : `${randomAngle}°`;
+
+                currentQuestion = {
+                    text: `Calcula el valor exacto (sin decimales) para la siguiente razón trigonométrica: <strong>${fnString}(${questionAngleExpr})</strong>`,
+                    options: opts,
+                    answer: opts.indexOf(correctVal),
+                    explanation: `El ángulo de ${randomAngle}° tiene un ángulo de referencia de ${((randomAngle%180) > 90 ? 180-(randomAngle%180) : (randomAngle%180))}° en el Círculo Unitario. Evaluando el signo en su cuadrante, obtenemos que ${fnString}(${questionAngleExpr}) = ${correctVal}.`
+                };
+            } else {
+                document.getElementById("quiz-diff").textContent = "Avanzado";
+                document.getElementById("quiz-diff").className = "difficulty-badge diff-hard";
+                document.getElementById("quiz-theme").textContent = "Tema: " + hardTheme;
+
+                // 2 types of advanced questions
+                const qType = Math.random() > 0.5 ? "identity" : "equation";
+
+                if (qType === "identity") {
+                    const identities = [
+                        { q: "sen²(θ) + cos²(θ)", ans: "1", exp: "Esta es la identidad pitagórica fundamental para cualquier ángulo θ." },
+                        { q: "1 + tan²(θ)", ans: "sec²(θ)", exp: "Identidad pitagórica recíproca derivada al dividir entre cos²(θ)." },
+                        { q: "sen(2θ)", ans: "2·sen(θ)·cos(θ)", exp: "Identidad para el ángulo doble del seno." },
+                        { q: "cos(2θ)", ans: "cos²(θ) - sen²(θ)", exp: "Identidad para el ángulo doble del coseno." }
+                    ];
+                    const item = identities[Math.floor(Math.random() * identities.length)];
+                    const dist = ["sen²(θ)", "cos²(θ)", "2·sen(θ)", "0", "tan(θ)"].filter(v => v !== item.ans).slice(0, 3);
+                    const opts = [item.ans, ...dist].sort(() => Math.random() - 0.5);
+
+                    currentQuestion = {
+                        text: `Simplifica o completa la siguiente expresión trigonométrica fundamental: <strong>${item.q}</strong>`,
+                        options: opts,
+                        answer: opts.indexOf(item.ans),
+                        explanation: item.exp
+                    };
+                } else {
+                    const equations = [
+                        { eq: "2·sen(x) - 1 = 0", ans: "[30°, 150°]", exp: "sen(x) = 1/2. En el intervalo [0, 360°], el seno es positivo en los cuadrantes I y II, correspondientes a 30° y 150°." },
+                        { eq: "2·cos(x) + √2 = 0", ans: "[135°, 225°]", exp: "cos(x) = -√2/2. El coseno es negativo en los cuadrantes II y III, correspondientes a 135° y 225°." },
+                        { eq: "tan(x) - 1 = 0", ans: "[45°, 225°]", exp: "tan(x) = 1. La tangente es positiva en los cuadrantes I y III, correspondientes a 45° y 225°." }
+                    ];
+                    const item = equations[Math.floor(Math.random() * equations.length)];
+                    const dist = ["[30°, 330°]", "[45°, 135°]", "[60°, 120°]", "[120°, 240°]"].filter(v => v !== item.ans).slice(0, 3);
+                    const opts = [item.ans, ...dist].sort(() => Math.random() - 0.5);
+
+                    currentQuestion = {
+                        text: `Resuelve la ecuación trigonométrica <strong>${item.eq}</strong> para el intervalo <strong>x ∈ [0, 360°]</strong>.`,
+                        options: opts,
+                        answer: opts.indexOf(item.ans),
+                        explanation: item.exp
+                    };
+                }
+            }
+
+            // Render options and text
+            document.getElementById("quiz-question-text").innerHTML = currentQuestion.text;
+            const optionsContainer = document.getElementById("quiz-options-container");
+            optionsContainer.innerHTML = "";
+
+            currentQuestion.options.forEach((opt, idx) => {
+                const card = document.createElement("div");
+                card.className = "option-card";
+                card.innerHTML = `<span>${opt}</span>`;
+                card.addEventListener("click", () => selectQuizOption(idx));
+                optionsContainer.appendChild(card);
+            });
+        }
+
+        function selectQuizOption(idx) {
+            // Only allow if feedback is hidden
+            const feedbackBox = document.getElementById("quiz-feedback-box");
+            if (feedbackBox.classList.contains("show")) return;
+
+            selectedOption = idx;
+            const options = document.querySelectorAll(".option-card");
+            options.forEach((card, i) => {
+                if (i === idx) {
+                    card.classList.add("selected");
+                } else {
+                    card.classList.remove("selected");
+                }
+            });
+        }
+
+        function checkQuizAnswer() {
+            if (selectedOption === null) {
+                alert("Por favor, selecciona una opción antes de comprobar.");
+                return;
+            }
+
+            const feedbackBox = document.getElementById("quiz-feedback-box");
+            const feedbackTitle = document.getElementById("feedback-title");
+            const feedbackText = document.getElementById("feedback-text");
+            const options = document.querySelectorAll(".option-card");
+
+            const isCorrect = selectedOption === currentQuestion.answer;
+
+            // Style options
+            options.forEach((card, idx) => {
+                card.classList.remove("selected");
+                if (idx === currentQuestion.answer) {
+                    card.classList.add("correct");
+                } else if (idx === selectedOption) {
+                    card.classList.add("incorrect");
+                }
+            });
+
+            // Set feedback content
+            if (isCorrect) {
+                feedbackBox.className = "quiz-feedback correct-fb show";
+                feedbackTitle.innerHTML = "¡Correcto! Excelente análisis.";
+            } else {
+                feedbackBox.className = "quiz-feedback incorrect-fb show";
+                feedbackTitle.innerHTML = "Incorrecto. Repasa la teoría.";
+            }
+            feedbackText.innerHTML = currentQuestion.explanation;
+        }
+
+        // Initialize view
+        updateAll(30);
+        loadQuiz('easy');
+
+    </script>
+</body>
+</html>
